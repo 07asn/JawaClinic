@@ -100,6 +100,7 @@ export default function ClinicData() {
               <StyledTableCell align="center">Name</StyledTableCell>
               <StyledTableCell align="center">Location </StyledTableCell>
               <StyledTableCell align="center">Products</StyledTableCell>
+              <StyledTableCell align="center">Prices</StyledTableCell>
               <StyledTableCell align="center">Doctors</StyledTableCell>
               <StyledTableCell align="center"></StyledTableCell>
               <StyledTableCell align="center"></StyledTableCell>
@@ -122,8 +123,19 @@ export default function ClinicData() {
                       {row.products.map((product) => {
                         return (
                           <div key={product.id}>
-                            <li>{product.name + " Rs. " + product.price}</li>
+                            <li>{product.name}</li>
                           </div>
+                        );
+                      })}
+                    </ul>
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    <ul>
+                      {row.products.map((product) => {
+                        return (
+                            <div key={product.id}>
+                              <li>{ product.price + " JD " }</li>
+                            </div>
                         );
                       })}
                     </ul>

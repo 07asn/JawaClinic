@@ -2,31 +2,23 @@ import React from "react";
 import {
   Box,
   Grid,
-  Paper,
-  TextField,
-  Button,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
-  useTheme,
+  Button,
 } from "@mui/material";
 
 export default function PatientAppointmentForm({ url, method, userData }) {
-  const theme = useTheme();
-
   const [patientList, setPatientList] = React.useState([]);
   const [patientData, setPatientData] = React.useState("");
 
-  const [appointmentList, setappointmentList] = React.useState([]);
-  const [appointmentData, setappointmentData] = React.useState("");
+  const [appointmentList, setAppointmentList] = React.useState([]);
+  const [appointmentData, setAppointmentData] = React.useState("");
 
-  //editable by receptionist
-  const [status, setstatus] = React.useState(userData.status);
-  const [patient, setpatient] = React.useState(userData.patient);
-  const [doctorAppointment, setdoctorAppointment] = React.useState(
-    userData.doctorAppointment
-  );
+  const [status, setStatus] = React.useState(userData.status);
+  const [patient, setPatient] = React.useState(userData.patient);
+  const [doctorAppointment, setDoctorAppointment] = React.useState(userData.doctorAppointment);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -39,8 +31,6 @@ export default function PatientAppointmentForm({ url, method, userData }) {
       doctorAppointment: doctorAppointment,
     };
 
-    console.log(userObject);
-
     try {
       const response = await fetch(url, {
         method: method,
@@ -52,13 +42,11 @@ export default function PatientAppointmentForm({ url, method, userData }) {
 
       const result = await response.json();
       if (response.ok) {
-        console.log("Success:", result);
         alert("Successfully saved data!");
         window.location.reload();
       }
     } catch (error) {
-      console.error("Error during registration:", error);
-      alert("Some error occur. Try again! " + error.message);
+      alert("Some error occurred. Try again! " + error.message);
     }
   };
 
@@ -66,26 +54,16 @@ export default function PatientAppointmentForm({ url, method, userData }) {
     fetch("http://localhost:8080/api/users/all", {
       method: "GET",
     })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setPatientList(data);
-      });
+        .then((res) => res.json())
+        .then((data) => setPatientList(data));
   };
 
   const fetchAppointmentsList = () => {
     fetch("http://localhost:8080/api/doctor-appointments/all", {
       method: "GET",
     })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setappointmentList(data);
-      });
+        .then((res) => res.json())
+        .then((data) => setAppointmentList(data));
   };
 
   React.useEffect(() => {
@@ -93,142 +71,99 @@ export default function PatientAppointmentForm({ url, method, userData }) {
     fetchPatientsList();
   }, []);
 
+  // Determine the last available date and time
+  const lastAppointment = appointmentList.reduce((last, current) => {
+    const lastDateTime = new Date(`${last.date}T${last.time}`);
+    const currentDateTime = new Date(`${current.date}T${current.time}`);
+    return currentDateTime > lastDateTime ? current : last;
+  }, appointmentList[0]);
+
+  const filteredAppointments = appointmentList.filter(appointment => {
+    const isLastAppointment = appointment.date === lastAppointment.date && appointment.time === lastAppointment.time;
+    return appointment.status === "AVAILABLE" && !isLastAppointment;
+  });
+
   return (
-    <Grid>
-      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel id="doctor-label">Patient</InputLabel>
-              <Select
-                labelId="doctor-label"
-                name="patient"
-                label="Patient"
-                value={patientData}
-                onChange={(e) => {
-                  setPatientData(e.target.value);
-                }}
-              >
-                {patientList.map((patientrow) => {
-                  if (patientrow.role === "PATIENT") {
-                    return (
+      <Grid>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel id="patient-label">Patient</InputLabel>
+                <Select
+                    labelId="patient-label"
+                    name="patient"
+                    label="Patient"
+                    value={patientData}
+                    onChange={(e) => setPatientData(e.target.value)}
+                >
+                  {patientList.map((patientrow) => (
+                      patientrow.role === "PATIENT" && (
+                          <MenuItem
+                              key={patientrow.id}
+                              value={`${patientrow.firstName} ${patientrow.lastName} ${patientrow.nationalNumber}`}
+                              onClick={() => {
+                                setPatient(patientrow);
+                                setPatientData(`${patientrow.firstName} ${patientrow.lastName} ${patientrow.nationalNumber}`);
+                              }}
+                          >
+                            {`${patientrow.firstName} ${patientrow.lastName} ${patientrow.nationalNumber}`}
+                          </MenuItem>
+                      )
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel id="appointment-label">Appointments</InputLabel>
+                <Select
+                    labelId="appointment-label"
+                    name="appointments"
+                    label="Doctor Appointments"
+                    value={appointmentData}
+                    onChange={(e) => setAppointmentData(e.target.value)}
+                >
+                  {filteredAppointments.map((appointment) => (
                       <MenuItem
-                        key={patientrow.id}
-                        value={
-                          patientrow.firstName +
-                          " " +
-                          patientrow.lastName +
-                          " " +
-                          patientrow.nationalNumber
-                        }
-                        onClick={() => {
-                          setpatient(patientrow);
-
-                          setPatientData(
-                            patientrow.firstName +
-                              " " +
-                              patientrow.lastName +
-                              " " +
-                              patientrow.nationalNumber
-                          );
-                        }}
+                          key={appointment.id}
+                          value={`${appointment.doctor.firstName} ${appointment.doctor.lastName} ${appointment.date} ${appointment.time}`}
+                          onClick={() => {
+                            setDoctorAppointment(appointment);
+                            setAppointmentData(`${appointment.doctor.firstName} ${appointment.doctor.lastName} ${appointment.date} ${appointment.time}`);
+                          }}
                       >
-                        {patientrow.firstName +
-                          " " +
-                          patientrow.lastName +
-                          " " +
-                          patientrow.nationalNumber}
+                        {`${appointment.doctor.firstName} ${appointment.doctor.lastName} ${appointment.date} ${appointment.time}`}
                       </MenuItem>
-                    );
-                  }
-                })}
-              </Select>
-            </FormControl>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel>Status</InputLabel>
+                <Select
+                    name="status"
+                    label="Status"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                >
+                  <MenuItem value={"SCHEDULED"}>SCHEDULED</MenuItem>
+                  <MenuItem value={"WAITLIST"}>WAITLIST</MenuItem>
+                  <MenuItem value={"DONE"}>DONE</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Button type="submit" fullWidth variant="contained" color="primary">
+                Save
+              </Button>
+            </Grid>
           </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel id="doctor-label">Appointments</InputLabel>
-              <Select
-                labelId="doctor-label"
-                name="appointments"
-                label="Doctor Appointments"
-                value={appointmentData}
-                onChange={(e) => {
-                  setappointmentData(e.target.value);
-                }}
-              >
-                {appointmentList.map((appointment) => {
-                  if (appointment.status === "AVAILABLE") {
-                    return (
-                      <MenuItem
-                        key={appointment.id}
-                        value={
-                          appointment.doctor.firstName +
-                          " " +
-                          appointment.doctor.lastName +
-                          " " +
-                          appointment.date +
-                          " " +
-                          appointment.time
-                        }
-                        onClick={() => {
-                          setdoctorAppointment(appointment);
-
-                          setappointmentData(
-                            appointment.doctor.firstName +
-                              " " +
-                              appointment.doctor.lastName +
-                              " " +
-                              appointment.date +
-                              " " +
-                              appointment.time
-                          );
-                        }}
-                      >
-                        {appointment.doctor.firstName +
-                          " " +
-                          appointment.doctor.lastName +
-                          " " +
-                          appointment.date +
-                          " " +
-                          appointment.time}
-                      </MenuItem>
-                    );
-                  }
-                })}
-              </Select>
-            </FormControl>
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel>Status</InputLabel>
-              <Select
-                name="status"
-                label="status"
-                value={status}
-                onChange={(e) => {
-                  setstatus(e.target.value);
-                }}
-              >
-                <MenuItem value={"SCHEDULED"}>SCHEDULED</MenuItem>
-
-                <MenuItem value={"CANCEL"}>CANCEL</MenuItem>
-
-                <MenuItem value={"WAITLIST"}>WAITLIST</MenuItem>
-                <MenuItem value={"DONE"}>DONE</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Button type="submit" fullWidth variant="contained" color="primary">
-              Save
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
-    </Grid>
+        </Box>
+      </Grid>
   );
 }

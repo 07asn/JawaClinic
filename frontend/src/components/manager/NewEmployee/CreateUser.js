@@ -21,7 +21,7 @@ export default function CreateUser({ url, method, userData }) {
   const [phoneNumber, setphoneNumber] = React.useState(userData.phoneNumber);
   const [dateOfBirth, setdateOfBirth] = React.useState(userData.dateOfBirth);
   const [nationalNumber, setnationalNumber] = React.useState(
-    userData.nationalNumber
+      userData.nationalNumber
   );
   const [gender, setgender] = React.useState(userData.gender);
   const [city, setcity] = React.useState(userData.city);
@@ -95,199 +95,204 @@ export default function CreateUser({ url, method, userData }) {
   };
 
   return (
-    <Grid>
-      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              fullWidth
-              name="firstName"
-              label="First Name"
-              autoComplete="given-name"
-              value={firstName}
-              onChange={(e) => {
-                setfirstName(e.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              fullWidth
-              name="lastName"
-              label="Last Name"
-              autoComplete="family-name"
-              value={lastName}
-              onChange={(e) => {
-                setlastName(e.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="email"
-              value={email}
-              label="Email Address"
-              type="email"
-              autoComplete="email"
-              onChange={(e) => {
-                setEmail(e.target.value);
-                const emailRegex = /^\w+@\w+\.com$/;
-                const isValid = emailRegex.test(e.target.value);
-                setError(!isValid);
-              }}
-              error={error}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="phoneNumber"
-              label="Phone Number"
-              type="tel"
-              autoComplete="tel"
-              value={phoneNumber}
-              onChange={(e) => {
-                setphoneNumber(e.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              autoComplete="new-password"
-              value={password}
-              error={passerror}
-              onChange={(e) => {
-                const pass = e.target.value;
-                if (pass.length < 8) {
-                  setPassError(true);
-                } else {
-                  setPassError(false);
-                }
+      <Grid>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                  required
+                  fullWidth
+                  name="firstName"
+                  label="First Name"
+                  autoComplete="given-name"
+                  value={firstName}
+                  onChange={(e) => {
+                    setfirstName(e.target.value);
+                  }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                  required
+                  fullWidth
+                  name="lastName"
+                  label="Last Name"
+                  autoComplete="family-name"
+                  value={lastName}
+                  onChange={(e) => {
+                    setlastName(e.target.value);
+                  }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                  required
+                  fullWidth
+                  name="email"
+                  value={email}
+                  label="Email Address"
+                  type="email"
+                  autoComplete="email"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    const emailRegex = /^\w+@\w+\.com$/;
+                    const isValid = emailRegex.test(e.target.value);
+                    setError(!isValid);
+                  }}
+                  error={error}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                  required
+                  fullWidth
+                  name="phoneNumber"
+                  label="Phone Number"
+                  type="tel"
+                  autoComplete="tel"
+                  value={phoneNumber}
+                  onChange={(e) => {
+                    setphoneNumber(e.target.value);
+                  }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  autoComplete="new-password"
+                  value={password}
+                  error={passerror}
+                  onChange={(e) => {
+                    const pass = e.target.value;
+                    if (pass.length < 8) {
+                      setPassError(true);
+                    } else {
+                      setPassError(false);
+                    }
 
-                setpassword(e.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              placeholder="YYYY-MM-DD"
-              fullWidth
-              name="dateOfBirth"
-              label="Date of Birth"
-              type="date"
-              InputLabelProps={{ shrink: true }}
-              autoComplete="bday"
-              value={dateOfBirth}
-              onChange={(e) => {
-                setdateOfBirth(e.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="nationalNumber"
-              label="National Number"
-              autoComplete="off"
-              value={nationalNumber}
-              error={nError}
-              onChange={(e) => {
-                const nno = e.target.value;
-                if (nno.length < 7) {
-                  setNError(true);
-                } else {
-                  setNError(false);
-                }
+                    setpassword(e.target.value);
+                  }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                  required
+                  placeholder="YYYY-MM-DD"
+                  fullWidth
+                  name="dateOfBirth"
+                  label="Date of Birth"
+                  type="date"
+                  InputLabelProps={{ shrink: true }}
+                  autoComplete="bday"
+                  value={dateOfBirth}
+                  onChange={(e) => {
+                    setdateOfBirth(e.target.value);
+                  }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                  required
+                  fullWidth
+                  name="nationalNumber"
+                  label="National Number"
+                  autoComplete="off"
+                  value={nationalNumber}
+                  error={nError}
+                  onChange={(e) => {
+                    const nno = e.target.value;
+                    if (nno.length < 7) {
+                      setNError(true);
+                    } else {
+                      setNError(false);
+                    }
 
-                setnationalNumber(e.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <InputLabel id="city-label">City</InputLabel>
-              <Select
-                  labelId="city-label"
-                  name="city"
-                  label="City"
-              >
-                <MenuItem value="Ajlun">Ajlun</MenuItem>
-                <MenuItem value="Amman">Amman</MenuItem>
-                <MenuItem value="Aqaba">Aqaba</MenuItem>
-                <MenuItem value="Balqa">Balqa</MenuItem>
-                <MenuItem value="Irbid">Irbid</MenuItem>
-                <MenuItem value="Jarash">Jarash</MenuItem>
-                <MenuItem value="Karak">Karak</MenuItem>
-                <MenuItem value="Ma`an">Ma`an</MenuItem>
-                <MenuItem value="Madaba">Madaba</MenuItem>
-                <MenuItem value="Mafraq">Mafraq</MenuItem>
-                <MenuItem value="Tafilah">Tafilah</MenuItem>
-                <MenuItem value="Zarqa">Zarqa</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel id="gender-label">Gender</InputLabel>
-              <Select
-                labelId="gender-label"
-                name="gender"
-                label="Gender"
-                defaultValue=""
-                value={gender}
-                onChange={(e) => {
-                  setgender(e.target.value);
-                }}
-              >
-                <MenuItem value="Male">Male</MenuItem>
-                <MenuItem value="Female">Female</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+                    setnationalNumber(e.target.value);
+                  }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl fullWidth>
+                <InputLabel id="city-label">City</InputLabel>
+                <Select
+                    labelId="city-label"
+                    name="city"
+                    value={city}
+                    defaultValue=""
+                    label="City"
+                    onChange={(e) => {
+                      setcity(e.target.value);
+                    }}
+                >
+                  <MenuItem value="Ajlun">Ajlun</MenuItem>
+                  <MenuItem value="Amman">Amman</MenuItem>
+                  <MenuItem value="Aqaba">Aqaba</MenuItem>
+                  <MenuItem value="Balqa">Balqa</MenuItem>
+                  <MenuItem value="Irbid">Irbid</MenuItem>
+                  <MenuItem value="Jarash">Jarash</MenuItem>
+                  <MenuItem value="Karak">Karak</MenuItem>
+                  <MenuItem value="Ma`an">Ma`an</MenuItem>
+                  <MenuItem value="Madaba">Madaba</MenuItem>
+                  <MenuItem value="Mafraq">Mafraq</MenuItem>
+                  <MenuItem value="Tafilah">Tafilah</MenuItem>
+                  <MenuItem value="Zarqa">Zarqa</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel id="gender-label">Gender</InputLabel>
+                <Select
+                    labelId="gender-label"
+                    name="gender"
+                    label="Gender"
+                    defaultValue=""
+                    value={gender}
+                    onChange={(e) => {
+                      setgender(e.target.value);
+                    }}
+                >
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel id="role-label">Role</InputLabel>
-              <Select
-                labelId="role-label"
-                name="role"
-                label="Role"
-                value={role}
-                onChange={(e) => {
-                  setrole(e.target.value);
-                }}
-              >
-                <MenuItem value="DOCTOR">DOCTOR</MenuItem>
-                <MenuItem value="RECEPTIONIST">RECEPTIONIST</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel id="role-label">Role</InputLabel>
+                <Select
+                    labelId="role-label"
+                    name="role"
+                    label="Role"
+                    value={role}
+                    onChange={(e) => {
+                      setrole(e.target.value);
+                    }}
+                >
+                  <MenuItem value="DOCTOR">DOCTOR</MenuItem>
+                  <MenuItem value="RECEPTIONIST">RECEPTIONIST</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
 
-          <Grid item xs={12}>
-            <Button type="submit" fullWidth variant="contained" color="primary">
-              Save
-            </Button>
+            <Grid item xs={12}>
+              <Button type="submit" fullWidth variant="contained" color="primary">
+                Save
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
-      <CustomAlert
-          open={alertOpen}
-          handleClose={handleCloseAlert}
-          message={alertMessage}
-          severity={alertSeverity}
-      />
-    </Grid>
+        </Box>
+        <CustomAlert
+            open={alertOpen}
+            handleClose={handleCloseAlert}
+            message={alertMessage}
+            severity={alertSeverity}
+        />
+      </Grid>
   );
 }

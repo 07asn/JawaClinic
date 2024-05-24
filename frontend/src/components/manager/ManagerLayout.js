@@ -22,21 +22,21 @@ export default function ManagerLayout() {
             to="/create-new-user"
             sx={{ color: "white", textTransform: "none", fontWeight: "bold" }}
           >
-            New Employee
+            Employees
           </Button>
           <Button
             component={Link}
             to="/create-new-clinic"
             sx={{ color: "white", textTransform: "none", fontWeight: "bold" }}
           >
-            Clinic
+            Clinics
           </Button>
           <Button
             component={Link}
             to="/create-new-product"
             sx={{ color: "white", textTransform: "none", fontWeight: "bold" }}
           >
-            Product
+            Products
           </Button>
           <Button
             component={Link}

@@ -48,8 +48,8 @@ export default function EmployeeData() {
       },
     };
     fetch(
-      "http://localhost:8080/api/users/delete/" + parseInt(id),
-      options
+        "http://localhost:8080/api/users/delete/" + parseInt(id),
+        options
     ).then((response) => {
       if (!response.ok) {
         alert("Some error occur. Try again! ");
@@ -64,103 +64,129 @@ export default function EmployeeData() {
     fetch("http://localhost:8080/api/users/all", {
       method: "GET",
     })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setRows(data);
-      });
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+          setRows(data);
+        });
   }, []);
   const handleClose = () => {
     setShow(false);
   };
   return (
-    <>
-      <Dialog onClose={handleClose} align="center" open={show}>
-        <Button
-          sx={{
-            color: "white",
-            align: "right",
-            backgroundColor: "red",
-            width: "2px",
-          }}
-          onClick={() => {
-            setShow(false);
-          }}
-        >
-          X
-        </Button>
-        <DialogTitle>Edit</DialogTitle>
-        <CreateUser url={url} method={method} userData={rowData} />
-      </Dialog>
+      <>
+        <Dialog onClose={handleClose} align="center" open={show}>
+          <Button
+              sx={{
+                color: "white",
+                align: "right",
+                backgroundColor: "red",
+                width: "2px",
+              }}
+              onClick={() => {
+                setShow(false);
+              }}
+          >
+            X
+          </Button>
+          <DialogTitle>Edit</DialogTitle>
+          <CreateUser url={url} method={method} userData={rowData} />
+        </Dialog>
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell align="center">Name</StyledTableCell>
-              <StyledTableCell align="center">Phone </StyledTableCell>
-              <StyledTableCell align="center">Nationl Number</StyledTableCell>
-              <StyledTableCell align="center">Role</StyledTableCell>
-              <StyledTableCell align="center"></StyledTableCell>
-              <StyledTableCell align="center"></StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => {
-              if (row.role !== "PATIENT") {
-                return (
-                  <StyledTableRow key={row.id}>
-                    <StyledTableCell component="th" scope="row">
-                      {row.firstName + " " + row.lastName}
-                    </StyledTableCell>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="center">Name</StyledTableCell>
+                <StyledTableCell align="center">Phone </StyledTableCell>
+                <StyledTableCell align="center">Nationl Number</StyledTableCell>
+                <StyledTableCell align="center">Role</StyledTableCell>
+                <StyledTableCell align="center"></StyledTableCell>
+                <StyledTableCell align="center"></StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => {
+                if (row.role !== "PATIENT" && row.role !== "MANAGER") {
+                  return (
+                      <StyledTableRow key={row.id}>
+                        <StyledTableCell component="th" scope="row">
+                          {row.firstName + " " + row.lastName}
+                        </StyledTableCell>
 
-                    <StyledTableCell align="right">
-                      {row.phoneNumber}
-                    </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {row.phoneNumber}
+                        </StyledTableCell>
 
-                    <StyledTableCell align="right">
-                      {row.nationalNumber}
-                    </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {row.nationalNumber}
+                        </StyledTableCell>
 
-                    <StyledTableCell align="right">{row.role}</StyledTableCell>
+                        <StyledTableCell align="right">{row.role}</StyledTableCell>
 
-                    <StyledTableCell align="right">
-                      <Button
-                          color="primary"
-                          variant="contained"
-                        onClick={() => {
-                          setShow(true);
-                          setUrl(
-                            "http://localhost:8080/api/users/update/" +
-                              parseInt(row.id)
-                          );
-                          setMethod("PUT");
-                          setRowData(row);
-                        }}
-                      >
-                        Edit
-                      </Button>
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      <Button
-                          color="secondary"
-                          variant="contained"
-                        onClick={() => {
-                          handleDelete(row.id);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                );
-              }
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
+                        <StyledTableCell align="right">
+                          <Button
+                              color="primary"
+                              variant="contained"
+                              onClick={() => {
+                                setShow(true);
+                                setUrl(
+                                    "http://localhost:8080/api/users/update/" +
+                                    parseInt(row.id)
+                                );
+                                setMethod("PUT");
+                                setRowData(row);
+                              }}
+                          >
+                            Edit
+                          </Button>
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          <Button
+                              color="secondary"
+                              variant="contained"
+                              onClick={() => {
+                                handleDelete(row.id);
+                              }}
+                          >
+                            Delete
+                          </Button>
+                        </StyledTableCell>
+                      </StyledTableRow>
+                  );
+                }else if( row.role == "MANAGER"){
+                  return (
+                      <StyledTableRow key={row.id}>
+                        <StyledTableCell component="th" scope="row">
+                          {row.firstName + " " + row.lastName}
+                        </StyledTableCell>
+
+                        <StyledTableCell align="right">
+                          {row.phoneNumber}
+                        </StyledTableCell>
+
+                        <StyledTableCell align="right">
+                          {row.nationalNumber}
+                        </StyledTableCell>
+
+                        <StyledTableCell align="right">{row.role}</StyledTableCell>
+
+                        <StyledTableCell align="right">
+
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+
+
+                        </StyledTableCell>
+                      </StyledTableRow>
+                  );
+                }
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </>
   );
 }

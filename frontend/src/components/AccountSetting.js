@@ -24,6 +24,7 @@ export default function AccountSetting() {
   const [nationalNumber, setNationalNumber] = useState("");
   const [gender, setGender] = useState("");
   const [city, setCity] = useState("");
+  const [role, setRole] = useState("");
   const [error, setError] = useState(false);
 
   const [passError, setPassError] = useState(false);
@@ -46,7 +47,7 @@ export default function AccountSetting() {
       nationalNumber: data.get("nationalNumber"),
       gender: data.get("gender"),
       city: data.get("city"),
-      role: "PATIENT",
+      role: role,
     };
 
     // Validation
@@ -124,6 +125,7 @@ export default function AccountSetting() {
           setGender(data.gender);
           setPhoneNumber(data.phoneNumber);
           setNationalNumber(data.nationalNumber);
+          setRole(data.role);
         });
   }, []);
 
@@ -168,9 +170,10 @@ export default function AccountSetting() {
                     autoComplete="email"
                     value={email}
                     onChange={(e) => {
-                      const emailRegex = /^\w+@\w+\.com$/;
+                      const emailRegex = /^\w+@\w+\.\w+$/;
                       const isValid = emailRegex.test(e.target.value);
                       setError(!isValid);
+                      setEmail(e.target.value);
                     }}
                     error={error}
                 />
@@ -221,7 +224,7 @@ export default function AccountSetting() {
                     value={dateOfBirth}
                     onChange={(e) => setDateOfBirth(e.target.value)}
                     inputProps={{
-                      max: new Date().toISOString().split("T")[0] // Set max date to today
+                      max: new Date().toISOString().split("T")[0], // Set max date to today
                     }}
                 />
               </Grid>
@@ -252,6 +255,8 @@ export default function AccountSetting() {
                       labelId="city-label"
                       name="city"
                       label="City"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
                   >
                     <MenuItem value="Ajlun">Ajlun</MenuItem>
                     <MenuItem value="Amman">Amman</MenuItem>
@@ -260,7 +265,7 @@ export default function AccountSetting() {
                     <MenuItem value="Irbid">Irbid</MenuItem>
                     <MenuItem value="Jarash">Jarash</MenuItem>
                     <MenuItem value="Karak">Karak</MenuItem>
-                    <MenuItem value="Ma`an">Ma`an</MenuItem>
+                    <MenuItem value="Ma'an">Ma'an</MenuItem>
                     <MenuItem value="Madaba">Madaba</MenuItem>
                     <MenuItem value="Mafraq">Mafraq</MenuItem>
                     <MenuItem value="Tafilah">Tafilah</MenuItem>
@@ -284,7 +289,7 @@ export default function AccountSetting() {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Button type="submit" fullWidth variant="contained" color="primary">
+                <Button type="submit" fullWidth variant="contained"primary>
                   Save
                 </Button>
               </Grid>
