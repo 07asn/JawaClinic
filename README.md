@@ -8,12 +8,20 @@ by providing the user
 
 Home page :
 
-![Picture1.png](https://drive.google.com/file/d/1ylpJjNTL1CTV4TMzFDhF85Xq7V7aQGjJ/view?usp=sharing)
-
-Login Page :
-
-![Screenshot 2024-05-24 185613](https://github.com/MOMENSHEHADEH/JawaClinicProject/assets/141729731/ad968876-16e2-4a10-99cf-719ea6f73849)
+![Picture1](https://github.com/07asn/JawaClinic/blob/55241f2725ce2d72ea5694262f88975a2e51cac0/Picture1.png)
 
 SingUp Page :
 
-![Screenshot 2024-05-24 185639](https://github.com/MOMENSHEHADEH/JawaClinicProject/assets/141729731/0d681f09-ad33-4026-88bc-e1b9897f212d)
+![Picture2](https://github.com/07asn/JawaClinic/blob/55241f2725ce2d72ea5694262f88975a2e51cac0/Picture2.png)
+
+Employees Records Page :
+
+![Picture3](https://github.com/07asn/JawaClinic/blob/55241f2725ce2d72ea5694262f88975a2e51cac0/Picture3.png)
+
+Schedule New Slot :
+
+![Picture4](https://github.com/07asn/JawaClinic/blob/55241f2725ce2d72ea5694262f88975a2e51cac0/Picture4.png)
+
+Patient Appointments History Page :
+
+![Picture5](https://github.com/07asn/JawaClinic/blob/55241f2725ce2d72ea5694262f88975a2e51cac0/Picture5.png)
