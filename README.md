@@ -8,7 +8,7 @@ by providing the user
 
 Home page :
 
-![Screenshot 2024-05-24 185613](https://drive.google.com/file/d/1ylpJjNTL1CTV4TMzFDhF85Xq7V7aQGjJ/view?usp=sharing)
+![Picture1.png](https://drive.google.com/file/d/1ylpJjNTL1CTV4TMzFDhF85Xq7V7aQGjJ/view?usp=sharing)
 
 Login Page :
 
